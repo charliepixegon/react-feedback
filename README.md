@@ -1,3 +1,15 @@
+This is a list of links to resources that we use throughout the course:
+
+CODE:
+
+Feedback App Repo: https://github.com/bradtraversy/feedback-app
+
+Github Finder App Repo: https://github.com/bradtraversy/github-finder-app
+
+House Marketplace Repo: https://github.com/bradtraversy/house-marketplace
+
+Brad's Gists - https://gist.github.com/bradtraversy
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
