@@ -1,5 +1,4 @@
 import FeedbackItem from '../FeedbackItem';
-import PropTypes from 'prop-types';
 
 function FeedbackList({ items }) {
   // display list of feedback items using prop items
@@ -18,16 +17,5 @@ function FeedbackList({ items }) {
     );
   }
 }
-
-// // default props
-// FeedbackList.defaultProps = {
-//   items: [],
-// };
-
-// // types
-
-// FeedbackList.propTypes = {
-//   items: PropTypes.arrayOf(PropTypes.object),
-// };
 
 export default FeedbackList;
