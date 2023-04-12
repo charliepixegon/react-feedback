@@ -21,8 +21,6 @@ function FeedbackForm() {
       setBtnDisabled(false);
       setMessage(null);
     }
-
-    // console.log(e.target.value);
     setReviewText(e.target.value);
   };
 
@@ -30,7 +28,8 @@ function FeedbackForm() {
     <Card>
       <form>
         <h2>How would you rate your service with us?</h2>
-        <RatingSelect rating={rating} setRating={setRating} />
+        {/* <RatingSelect rating={rating} setRating={setRating} /> */}
+        <RatingSelect ratingSelected={(rating) => setRating(rating)} />
         <div className="input-group">
           <input
             onChange={handleReviewTextChange}

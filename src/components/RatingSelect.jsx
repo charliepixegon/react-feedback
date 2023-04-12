@@ -1,10 +1,13 @@
 import { useState } from 'react';
 
-function RatingSelect() {
-  const [selected, setSelected] = useState(10);
+// rating is a prop that is passed to the component
+
+function RatingSelect({ ratingSelected }) {
+  const [selected, setSelected] = useState(1);
 
   const handleChange = (e) => {
-    setSelected(e.target.value);
+    setSelected(+e.currentTarget.value);
+    ratingSelected(+e.currentTarget.value);
   };
 
   return (
