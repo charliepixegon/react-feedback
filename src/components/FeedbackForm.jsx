@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Card from './shared/Card';
 import Button from './shared/Button';
 import RatingSelect from './RatingSelect';
-import { useContext } from 'react';
 import FeedbackContext from '../context/FeedbackContext';
 
 function FeedbackForm() {
@@ -13,7 +12,19 @@ function FeedbackForm() {
   const [message, setMessage] = useState('');
 
   // get data from context
-  const { addFeedback } = useContext(FeedbackContext);
+  const { addFeedback, feedbackEdit } = useContext(FeedbackContext);
+
+  // useEffect hook great spot to make API calls
+  // the 2nd argument uses a "sideeffect" and this will run when the value changes
+  useEffect(() => {
+    console.log('in useEffect HELLO');
+    if (feedbackEdit.edit) {
+      console.log(feedbackEdit.item);
+      setBtnDisabled(false);
+      setReviewText(feedbackEdit.item.text);
+      setRating(feedbackEdit.item.rating);
+    }
+  }, [feedbackEdit]);
 
   const handleReviewTextChange = (e) => {
     if (reviewText === '') {

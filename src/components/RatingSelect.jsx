@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
+import FeedbackContext from '../context/FeedbackContext';
 
 // rating is a prop that is passed to the component
 
 function RatingSelect({ ratingSelected }) {
   const [selected, setSelected] = useState(1);
 
+  const { feedbackEdit } = useContext(FeedbackContext);
+
   const handleChange = (e) => {
     setSelected(+e.currentTarget.value);
     ratingSelected(+e.currentTarget.value);
   };
+
+  useEffect(() => {
+    setSelected(feedbackEdit.item.rating);
+  }, [feedbackEdit]);
 
   return (
     <ul className="rating">
