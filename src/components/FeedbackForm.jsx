@@ -2,8 +2,13 @@ import { useState } from 'react';
 import Card from './shared/Card';
 import Button from './shared/Button';
 import RatingSelect from './RatingSelect';
+import { useContext } from 'react';
+import FeedbackContext from '../context/FeedbackContext';
 
-function FeedbackForm({ handleAdd }) {
+function FeedbackForm() {
+  // get data from context
+  const { addFeedback } = useContext(FeedbackContext);
+
   // component state
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(10);
@@ -34,7 +39,7 @@ function FeedbackForm({ handleAdd }) {
         rating,
       };
 
-      handleAdd(newFeedback);
+      addFeedback(newFeedback);
 
       setReviewText('');
       setRating(10);
@@ -45,7 +50,6 @@ function FeedbackForm({ handleAdd }) {
     <Card>
       <form onSubmit={handleSubmit}>
         <h2>How would you rate your service with us?</h2>
-        {/* <RatingSelect rating={rating} setRating={setRating} /> */}
         <RatingSelect ratingSelected={(rating) => setRating(rating)} />
         <div className="input-group">
           <input
