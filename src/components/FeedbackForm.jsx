@@ -6,14 +6,14 @@ import { useContext } from 'react';
 import FeedbackContext from '../context/FeedbackContext';
 
 function FeedbackForm() {
-  // get data from context
-  const { addFeedback } = useContext(FeedbackContext);
-
   // component state
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(10);
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState('');
+
+  // get data from context
+  const { addFeedback } = useContext(FeedbackContext);
 
   const handleReviewTextChange = (e) => {
     if (reviewText === '') {
