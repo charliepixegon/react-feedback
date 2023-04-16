@@ -12,7 +12,8 @@ function FeedbackForm() {
   const [message, setMessage] = useState('');
 
   // get data from context
-  const { addFeedback, feedbackEdit } = useContext(FeedbackContext);
+  const { addFeedback, feedbackEdit, updateFeedback } =
+    useContext(FeedbackContext);
 
   // useEffect hook great spot to make API calls
   // the 2nd argument uses a "sideeffect" and this will run when the value changes
@@ -50,7 +51,12 @@ function FeedbackForm() {
         rating,
       };
 
-      addFeedback(newFeedback);
+      // add new or update existing feedback
+      if (feedbackEdit.edit === true) {
+        updateFeedback(feedbackEdit.item.id, newFeedback);
+      } else {
+        addFeedback(newFeedback);
+      }
 
       setReviewText('');
       setRating(10);
