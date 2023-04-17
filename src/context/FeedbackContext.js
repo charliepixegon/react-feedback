@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 const FeedbackContext = createContext();
@@ -6,23 +6,29 @@ const FeedbackContext = createContext();
 // need a provider - in order for the context to be available to the entire app
 
 export const FeedbackProvider = ({ children }) => {
-  const [feedback, setFeedback] = useState([
-    {
-      id: 1,
-      text: 'This is a test feedback from context',
-      rating: 7,
-    },
-    {
-      id: 2,
-      text: 'example feedback from context',
-      rating: 4,
-    },
-  ]);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [feedback, setFeedback] = useState([]);
   const [feedbackEdit, setFeedbackEdit] = useState({
     item: {},
     edit: false,
   });
+
+  // will only run once if you leave second argument empty
+  useEffect(() => {
+    console.log('useEffect in FeedbackContext');
+    fetchFeedback();
+  }, []);
+
+  // fetch feedback
+  const fetchFeedback = async () => {
+    const res = await fetch(
+      'http://localhost:3333/feedback?_sort=id&_order=desc'
+    );
+    const data = await res.json();
+    // console.log(data);
+    setFeedback(data);
+    setIsLoading(false);
+  };
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this feedback?')) {
@@ -60,6 +66,7 @@ export const FeedbackProvider = ({ children }) => {
       value={{
         feedback,
         feedbackEdit,
+        isLoading,
         handleDelete,
         addFeedback,
         editFeedback,

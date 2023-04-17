@@ -18,12 +18,14 @@ function FeedbackForm() {
   // useEffect hook great spot to make API calls
   // the 2nd argument uses a "sideeffect" and this will run when the value changes
   useEffect(() => {
-    console.log('in useEffect HELLO');
-    if (feedbackEdit.edit) {
+    if (feedbackEdit.edit === true) {
+      console.log('FeedbackForm useEffect editing');
       console.log(feedbackEdit.item);
       setBtnDisabled(false);
       setReviewText(feedbackEdit.item.text);
       setRating(feedbackEdit.item.rating);
+    } else {
+      console.log('FeedbackForm useEffect NEW');
     }
   }, [feedbackEdit]);
 
