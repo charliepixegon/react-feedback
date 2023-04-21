@@ -14,6 +14,16 @@
       "id": 3,
       "rating": 6,
       "text": "This is feedback item #3 coming from backend"
+    },
+    {
+      "text": "This sucks!!!",
+      "rating": 1,
+      "id": 4
+    },
+    {
+      "text": "we loved it!!!!  gave it a 7",
+      "rating": 7,
+      "id": 5
     }
   ]
 }

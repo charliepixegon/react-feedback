@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 const FeedbackContext = createContext();
 
+//
 // need a provider - in order for the context to be available to the entire app
-
+//
 export const FeedbackProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [feedback, setFeedback] = useState([]);
@@ -13,50 +13,77 @@ export const FeedbackProvider = ({ children }) => {
     edit: false,
   });
 
-  // will only run once if you leave second argument empty
+  const editFeedback = (item) => {
+    setFeedbackEdit({ item, edit: true });
+  };
+
+  //
+  // useEffect Hook - will only run once if you leave second argument empty
+  //
   useEffect(() => {
-    console.log('useEffect in FeedbackContext');
+    console.log(
+      '\n\n ******** FeedbackContext.useEffect: FETCHING DATA ******** \n\n'
+    );
     fetchFeedback();
   }, []);
 
-  // fetch feedback
   const fetchFeedback = async () => {
     const res = await fetch('/feedback?_sort=id&_order=desc');
     const data = await res.json();
-    // console.log(data);
+
     setFeedback(data);
     setIsLoading(false);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this feedback?')) {
-      const newFeedback = feedback.filter((item) => item.id !== id);
-      setFeedback(newFeedback);
-    }
+  //
+  // ADD feedback - POST to backend
+  //
+  const addFeedback = async (newFeedback) => {
+    const response = await fetch('/feedback', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newFeedback),
+    });
+
+    // after adding to backend, add to state as well
+    const data = await response.json();
+    setFeedback([data, ...feedback]);
   };
 
-  const addFeedback = (newFeedback) => {
-    newFeedback.id = uuidv4();
-    console.log(newFeedback);
-    setFeedback([newFeedback, ...feedback]);
-  };
+  //
+  // UPDATE feedback - PUT to backend
+  //
+  const updateFeedback = async (id, updItem) => {
+    const response = await fetch(`/feedback/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updItem),
+    });
 
-  // set item to be updated
-  const editFeedback = (item) => {
-    console.log('editing');
-    setFeedbackEdit({ item, edit: true });
-  };
-
-  // update feedback item
-  const updateFeedback = (id, updItem) => {
-    console.log('updating');
-    console.log(`id: ${id} updItem: ${updItem}`);
-
-    // setFeedback(feedback.map((item) => (item.id === id ? updItem : item)));
+    const data = await response.json();
 
     setFeedback(
-      feedback.map((item) => (item.id === id ? { ...item, ...updItem } : item))
+      feedback.map((item) => (item.id === id ? { ...item, ...data } : item))
     );
+  };
+
+  //
+  // DELETE feedback item
+  //
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this feedback?')) {
+      // delete from backend
+      fetch(`/feedback/${id}`, {
+        method: 'DELETE',
+      });
+
+      // update state by filtering out the item we just deleted
+      setFeedback(feedback.filter((item) => item.id !== id));
+    }
   };
 
   return (
