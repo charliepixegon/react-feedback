@@ -2,7 +2,7 @@
   "name": "feedback-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://symphonious-pika-b73d96.netlify.app:3333",
+  "proxy": "http://localhost:3333",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -20,8 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "buildOLD": "react-scripts build",
-    "build": "concurrently \"npm run server\" \"react-scripts build\"",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "json-server --watch db.json --port 3333",
